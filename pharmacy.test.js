@@ -67,4 +67,22 @@ describe("Pharmacy", () => {
 
     expect(new Pharmacy(drugs).updateBenefitValue()).toEqual(result);
   });
+
+  it("should correctly decrease the benefit value for the drug Dafalgan", () => {
+    const drugs = [
+      new Drug("Dafalgan", 15, 8),
+      new Drug("Dafalgan", -2, 8),
+      new Drug("Dafalgan", 15, 0)
+    ];
+
+    const result = [
+      new Drug("Dafalgan", 14, 6),
+      new Drug("Dafalgan", -3, 4),
+      new Drug("Dafalgan", 14, 0)
+    ];
+
+    expect(new Pharmacy(drugs).updateBenefitValue()).toEqual(result);
+  });
+
+
 });
