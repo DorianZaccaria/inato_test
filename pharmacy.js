@@ -29,13 +29,13 @@ export class Pharmacy {
     return this.drugs[i].benefit - decreaseBy;
   }
 
-  // Decrease the benefit for a given drug by 1 if the expiration period is
-  // above 0, by twice otherwise.
-  decreaseBenefit(i) {
+  // Decrease the benefit for a given drug by 1 * ratio if the expiration period
+  // isabove 0, by 2 * ratio otherwise.
+  decreaseBenefit(i, ratio = 1) {
     if (this.drugs[i].expiresIn > 0) {
-      this.drugs[i].benefit = this.decrement(i, 1);
+      this.drugs[i].benefit = this.decrement(i, 1 * ratio);
     } else {
-      this.drugs[i].benefit = this.decrement(i, 2);
+      this.drugs[i].benefit = this.decrement(i, 2 * ratio);
     }
 
     this.drugs[i].expiresIn -= 1;
@@ -86,6 +86,10 @@ export class Pharmacy {
         // Fervex has a special benefit update
         case "Fervex":
           this.updateFervex(i);
+          break;
+        // Dafalgan benefit decreases twice as fast as other drugs
+        case "Dafalgan":
+          this.decreaseBenefit(i, 2);
           break;
         default:
           this.decreaseBenefit(i);
